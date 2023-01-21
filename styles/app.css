@@ -1,0 +1,9 @@
+@font-face{
+    font-family: "Linux Libertine";
+    src: url(../fonts/linux-libertine.ttf);
+}
+
+body{
+    margin:0;
+    padding:0;
+}

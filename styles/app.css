@@ -11,6 +11,7 @@ body{
     font-family:sans-serif;
     display:flex;
     justify-content:center;
+    background:rgb(240,255,252);
 }
 
 h1, h2, h3, h4, h5, h6{ margin:unset; font-family: 'Linux Libertine','Georgia','Times',serif }
@@ -56,8 +57,13 @@ aside{
 }
 
 .content{
-    margin-block-start:50px;
+    margin-block:50px;
     grid-area:main-content;
     padding:20px;
-    background:yellow;
+    background:white;
+}
+
+#game-content{
+    box-shadow:-2px 0 2px rgba(0,0,0,0.15), 0 0 10px rgba(0,0,0,0.08);
+    border-radius:2px;
 }

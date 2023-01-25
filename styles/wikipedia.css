@@ -1,0 +1,23 @@
+h1,h2{
+    color: #000;
+    background: none;
+    font-weight: normal;
+    margin: 0;
+    overflow: hidden;
+    padding-top: 0.5em;
+    padding-bottom: 0.17em;
+    border-bottom: 1px solid #a2a9b1;
+}
+
+.infobox{
+    margin: 25px 0 25px 50px;
+    padding: 0.2em;
+    float: right;
+    clear: right;
+    font-size: 88%;
+    line-height: 1.5em;
+    width:22em;
+    border: 1px solid #a2a9b1;
+    border-spacing: 3px;
+    background-color: #f8f9fa;
+}

@@ -2,14 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="styles/app.css" />
     <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/app.css" />
+    <link rel="stylesheet" type="text/css" href="styles/wikipedia.css" />
     <title>Wikilinks - The Wikipedia Racing Game! - Tennessine</title>
 </head>
 <body>
     <?php $external_header = TRUE; include '../components/header.php'; ?>
 
-    <main class="page visible">
+    <main class="page">
         <aside>
             <img id="logo" alt="Wikilinks" src="images/logo.png" />
             <div id="mode-container">
@@ -36,7 +37,7 @@
             game aside
         </aside>
         <section id="game-content" class="content">
-            game-content
+            <?php include 'temp_article.php'; ?>
         </section>
     </section>
 

@@ -37,9 +37,8 @@
             game aside
         </aside>
         <section id="game-content" class="content">
-            <?php include 'temp_article.php'; ?>
+            
         </section>
     </section>
-
 </body>
 </html>

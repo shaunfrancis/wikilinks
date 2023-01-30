@@ -17,6 +17,7 @@ body{
 h1, h2, h3, h4, h5, h6{ margin:unset; font-family: 'Linux Libertine','Georgia','Times',serif }
 h1{ font-size: 1.8em }
 h2{ font-size: 1.5em }
+p{ font-size: 0.875em; line-height:1.6 }
 
 .page{
     display:none;

@@ -17,6 +17,7 @@
     $result = json_decode($result, TRUE);
     if(!result) exit('{"status":500}');
 
-    if(isset($result['error'])) exit('{"status":500}');
+    if(isset($result['error']) && $result['error']['code'] == "missingtitle") exit('{"status":404}');
+    else if(isset($result['error'])) exit('{"status":500}');
     else exit('{"status":200, "title":' . json_encode($result['parse']['title']) . ', "content":' . json_encode($result['parse']['text']['*']) . '}');
 ?>

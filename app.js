@@ -3,13 +3,6 @@ class Article{
         this.title = title;
     }
 
-    async exists(){
-        let response = await fetch(`scripts/article_exists.php?title=${encodeURI(this.title)}`);
-        response = await response.json();
-        if(response.status == 200) return response.exists;
-        else throw new Error(response.status);
-    }
-
     async download(){
         let response = await fetch(`scripts/get_article.php?title=${encodeURI(this.title)}`);
         response = await response.json();
@@ -17,7 +10,7 @@ class Article{
             this.title = response.title;
             this.content = response.content;
         }
-        else this.content = "fail";
+        else throw new Error(response.status);
     }
 
     parse(){
@@ -27,20 +20,47 @@ class Article{
         text = text.replace(/<a[^>]*href="\/wiki\//g, '<span class="link" data-target="');
         text = text.replace(/<a[^>]*>/g, '<span>');
         text = text.replace(/<\/a>/g, '</span>');
-        this.html = `<h1>${this.title}</h1>${text}`;
+
+        const parser = new DOMParser();
+        const html = parser.parseFromString(`<h1>${this.title}</h1>${text}`, 'text/html');
+
+        let container = document.createElement('div'), child;
+        container.classList.add('game-article');
+        while(child = html.body.firstChild) container.appendChild(child);
+        this.html = container;
+    }
+
+    makeInteractive(callback){
+        [...this.html.querySelectorAll('[data-target]')].forEach( link => {
+            const target = decodeURI(link.dataset.target).replace(/_/g, ' ');
+            link.removeAttribute('data-target');
+            link.addEventListener('click', () => {
+                this.html.classList.add('loading');
+                callback(new Article(target));
+            });
+        });
     }
 }
 
 class Game{
-    constructor(initial, target){
+    constructor(initial, goal){
         this.initial = new Article(initial);
-        this.target = new Article(target);
+        this.goal = new Article(goal);
+        this.clicks = -1;
     }
 
     async start(){
-        await this.initial.download();
-        this.initial.parse();
-        document.getElementById('game-content').innerHTML = this.initial.html;
+        this.next(this.initial);
+    }
+
+    async next(article){
+        this.clicks += 1;
+
+        await article.download();
+        article.parse();
+        article.makeInteractive(this.next.bind(this));
+        document.getElementById('game-content').innerHTML = "";
+        document.getElementById('game-content').appendChild(article.html);
     }
 }
 

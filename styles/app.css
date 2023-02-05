@@ -74,3 +74,8 @@ aside{
     box-shadow:-2px 0 2px rgba(0,0,0,0.15), 0 0 10px rgba(0,0,0,0.08);
     border-radius:2px;
 }
+
+.game-article.loading{
+    pointer-events:none;
+    opacity:0.5;
+}

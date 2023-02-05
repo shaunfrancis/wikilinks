@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="styles/wikipedia.css" />
     <title>Wikilinks - The Wikipedia Racing Game! - Tennessine</title>
 </head>
-<body>
+<body class="main-visible">
     <?php $external_header = TRUE; include '../components/header.php'; ?>
 
     <main class="page">
@@ -28,11 +28,12 @@
         <div class="content">
             <section>
                 <h1>Today's Game</h1>
+                <button onclick="temp_game()">temp_game</button>
             </section>
         </div>
     </main>
 
-    <section id="game" class="page visible">
+    <section id="game" class="page">
         <aside>
             game aside
         </aside>

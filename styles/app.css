@@ -20,17 +20,23 @@ h2{ font-size: 1.5em }
 p{ font-size: 0.875em; line-height:1.6 }
 
 .page{
-    display:none;
     position:absolute;
     margin-top:50px;
-}
-
-.page.visible{
     display:grid;
     grid-template-columns:290px 1000px;
     grid-template-areas:"sidebar main-content";
     column-gap:50px;
     justify-content:center;
+    opacity:0;
+    pointer-events:none;
+    z-index:-1;
+    transition:opacity 200ms;
+}
+
+body.main-visible main, body.game-visible #game{
+    z-index:1;
+    opacity:1;
+    pointer-events:auto;
 }
 
 aside{

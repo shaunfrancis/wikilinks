@@ -36,6 +36,7 @@
     <section id="game" class="page">
         <aside>
             game aside
+            <div id="timer">0</div>
         </aside>
         <section id="game-content" class="content">
             

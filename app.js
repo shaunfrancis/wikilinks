@@ -50,18 +50,38 @@ class Game{
     }
 
     async start(){
+        this.startTime = Date.now();
+        this.elapsed = 0;
+        this.pausedTime = 0;
+
+        setInterval(this.controller.bind(this), 500);
+
         this.next(this.initial);
+    }
+
+    controller(){
+        if(this.paused) return;
+        const elapsed = ((Date.now() - this.startTime - this.pausedTime) / 1000).toFixed(0);
+        if(elapsed != this.elapsed){
+            this.elapsed = elapsed;
+            document.getElementById('timer').innerHTML = this.elapsed;
+        }
     }
 
     async next(article){
         this.clicks += 1;
 
+        this.pauseTimer();
         await article.download();
         article.parse();
         article.makeInteractive(this.next.bind(this));
         document.getElementById('game-content').innerHTML = "";
         document.getElementById('game-content').appendChild(article.html);
+        this.resumeTimer();
     }
+
+    pauseTimer(){ this.paused = true; this.pausedAt = Date.now() }
+    resumeTimer(){ this.pausedTime += Date.now() - this.pausedAt; this.paused = false }
 }
 
 async function temp_game(){

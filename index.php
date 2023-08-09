@@ -34,9 +34,22 @@
     </main>
 
     <section id="game" class="page">
+        <section id="game-banner">
+            <div class="current-stat">
+                <div id="current-points" class="current-stat-value">0</div>
+                <div class="current-stat-label">points</div>
+            </div>
+            <div class="current-stat">
+                <div id="current-clicks" class="current-stat-value">0</div>
+                <div class="current-stat-label">clicks</div>
+            </div>
+            <div class="current-stat">
+                <div id="current-seconds" class="current-stat-value">0</div>
+                <div class="current-stat-label">seconds</div>
+            </div>
+        </section>
         <aside>
             game aside
-            <div id="timer">0</div>
         </aside>
         <section id="game-content" class="content">
             

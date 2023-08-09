@@ -64,12 +64,13 @@ class Game{
         const elapsed = ((Date.now() - this.startTime - this.pausedTime) / 1000).toFixed(0);
         if(elapsed != this.elapsed){
             this.elapsed = elapsed;
-            document.getElementById('timer').innerHTML = this.elapsed;
+            this.updateStats();
         }
     }
 
     async next(article){
         this.clicks += 1;
+        this.updateStats();
 
         this.pauseTimer();
         await article.download();
@@ -82,6 +83,13 @@ class Game{
 
     pauseTimer(){ this.paused = true; this.pausedAt = Date.now() }
     resumeTimer(){ this.pausedTime += Date.now() - this.pausedAt; this.paused = false }
+
+    updateStats(){
+        document.getElementById('current-seconds').innerHTML = this.elapsed;
+        document.getElementById('current-clicks').innerHTML = this.clicks;
+        document.getElementById('current-points').innerHTML = 10*this.clicks + Math.floor(this.elapsed/10);
+
+    }
 }
 
 async function temp_game(){

@@ -23,8 +23,10 @@ p{ font-size: 0.875em; line-height:1.6 }
     position:absolute;
     margin-top:50px;
     display:grid;
-    grid-template-columns:290px 1000px;
-    grid-template-areas:"sidebar main-content";
+    grid-template-columns:auto 290px 1000px auto;
+    grid-template-areas:    
+        "banner banner banner banner"
+        ". sidebar main-content .";
     column-gap:50px;
     justify-content:center;
     opacity:0;
@@ -78,4 +80,24 @@ aside{
 .game-article.loading{
     pointer-events:none;
     opacity:0.5;
+}
+
+#game-banner{
+    position:sticky;
+    top:0;
+    background:red;
+    grid-area:banner;
+    display:flex;
+}
+
+.current-stat{
+    text-align:center;
+}
+
+.current-stat-value{
+    font-size:1.5em;
+}
+
+.current-stat-label{
+
 }

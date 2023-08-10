@@ -70,10 +70,83 @@ aside{
     grid-area:main-content;
     padding:20px;
     background:white;
+    box-shadow:-2px 0 2px rgba(0,0,0,0.15), 0 0 10px rgba(0,0,0,0.08);
 }
 
+.featured-game-container{
+    display:flex;
+    gap:25px;
+    margin:20px 0;
+    padding:20px;
+}
+
+.featured-arrow{
+    flex:0 0 50px;
+    max-width:50px;
+}
+
+.featured-article{
+    position:relative;
+    flex-grow:1;
+    aspect-ratio:1/0.63; /*jigsaw dimensions*/
+    padding:20px;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,0.25));
+}
+
+#jigsaw-clips{
+    position:absolute;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.jigsaw-pattern{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:0;
+    background-color:red;
+    background-size:cover;
+    background-position:center;
+}
+.featured-article:first-child .jigsaw-pattern{ clip-path:url(#left-jigsaw-shape) }
+.featured-article:last-child .jigsaw-pattern{ clip-path:url(#right-jigsaw-shape) }
+
+
+.featured-article-content{
+    position:absolute;
+    left:0;
+    top:0;
+    margin:30px 40px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,0.25));
+}
+.featured-article:last-child .featured-article-content{ left:5% }
+
+.featured-article-content h1{
+    display:inline;
+    border:none;
+    padding:0 0;
+    margin:0;
+    background:#fff;
+    box-shadow:-20px 0 0 #fff, 20px 0 0 #fff;
+    filter:drop-shadow(0 -10px 0px #fff) drop-shadow(0 10px 0px #fff);
+
+}
+
+.featured-article-content p{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    display:none;
+}
+
+
 #game-content{
-    box-shadow:-2px 0 2px rgba(0,0,0,0.15), 0 0 10px rgba(0,0,0,0.08);
     border-radius:2px;
 }
 
@@ -96,8 +169,4 @@ aside{
 
 .current-stat-value{
     font-size:1.5em;
-}
-
-.current-stat-label{
-
 }

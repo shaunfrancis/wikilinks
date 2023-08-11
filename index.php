@@ -101,6 +101,11 @@
 
     <section id="game" class="page">
         <section id="game-banner">
+            <div id="initial-jigsaw-path-piece" class="jigsaw-path-piece"></div>
+            <div id="jigsaw-path-container"></div>
+            <div id="goal-jigsaw-path-piece" class="jigsaw-path-piece"></div>
+        </section>
+        <aside>
             <div class="current-stat">
                 <div id="current-points" class="current-stat-value">0</div>
                 <div class="current-stat-label">points</div>
@@ -113,9 +118,6 @@
                 <div id="current-seconds" class="current-stat-value">0</div>
                 <div class="current-stat-label">seconds</div>
             </div>
-        </section>
-        <aside>
-            game aside
         </aside>
         <section id="game-content" class="content">
             

@@ -47,6 +47,9 @@ class Game{
         this.initial = new Article(initial);
         this.goal = new Article(goal);
         this.clicks = -1;
+
+        document.getElementById('initial-jigsaw-path-piece').innerHTML = initial;
+        document.getElementById('goal-jigsaw-path-piece').innerHTML = goal;
     }
 
     async start(){
@@ -69,6 +72,7 @@ class Game{
     }
 
     async next(article){
+        document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
         this.clicks += 1;
         this.updateStats();
 
@@ -79,6 +83,13 @@ class Game{
         document.getElementById('game-content').innerHTML = "";
         document.getElementById('game-content').appendChild(article.html);
         this.resumeTimer();
+
+        if(this.clicks > 0){
+            const pathPiece = document.createElement('div');
+            pathPiece.classList.add('jigsaw-path-piece');
+            pathPiece.innerHTML = article.title;
+            document.getElementById('jigsaw-path-container').appendChild(pathPiece);
+        }
     }
 
     pauseTimer(){ this.paused = true; this.pausedAt = Date.now() }

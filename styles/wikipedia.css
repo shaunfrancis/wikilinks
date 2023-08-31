@@ -6,8 +6,11 @@ h1,h2{
     overflow: hidden;
     padding-top: 0.5em;
     padding-bottom: 0.17em;
+}
+section > h1, section > h2, .game-article h1, .game-article h2{
     border-bottom: 1px solid #a2a9b1;
 }
+
 
 .infobox{
     margin: 25px 0 25px 50px;

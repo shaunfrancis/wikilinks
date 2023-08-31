@@ -1,5 +1,5 @@
 :root{
-    --inline-jigsaw-grad: linear-gradient(white 0%, white calc(50% - 10px), transparent calc(50% - 10px), transparent calc(50% + 10px), white calc(50% + 10px), white 100%);
+    --inline-jigsaw-grad: linear-gradient(white 0%, white calc(50% - 9px), transparent calc(50% - 9px), transparent calc(50% + 9px), white calc(50% + 9px), white 100%);
 }
 
 @font-face{
@@ -62,6 +62,10 @@ aside{
     object-fit:contain;
 }
 
+#explainer{
+    text-align:center;
+}
+
 #mode-container{
     width:100%;
     margin-block-start:20px;
@@ -71,6 +75,7 @@ aside{
     padding:20px;
     margin-block:20px;
     border:2px solid black;
+    background:#fff;
 }
 
 .content{
@@ -81,16 +86,28 @@ aside{
     box-shadow:-2px 0 2px rgba(0,0,0,0.15), 0 0 10px rgba(0,0,0,0.08);
 }
 
+.featured-games-container{
+    display:flex;
+    flex-wrap:wrap;
+}
+
 .featured-game-container{
     display:flex;
-    gap:25px;
-    margin:20px 0;
+    gap:2.5%;
+    margin:10px 0;
     padding:20px;
+    flex:0 0 60%;
+    cursor:pointer;
+    transition:background-color 100ms;
+}
+
+.featured-game-container:hover{
+    background-color:rgb(214, 223, 255);
 }
 
 .featured-arrow{
-    flex:0 0 50px;
-    max-width:50px;
+    flex:0 0 5%;
+    max-width:5%;
 }
 
 .featured-article{
@@ -117,6 +134,7 @@ aside{
     top:0;
     left:0;
     z-index:0;
+    background-color:#fff;
     background-size:cover;
     background-position:center;
 }
@@ -128,18 +146,18 @@ aside{
     position:absolute;
     left:0;
     top:0;
-    margin:30px 40px;
+    margin:25px 35px;
     filter:drop-shadow(0 1px 1px rgba(0,0,0,0.25));
 }
 .featured-article:last-child .featured-article-content{ left:5% }
 
-.featured-article-content h1{
+.featured-article-content h2{
     display:inline;
-    border:none;
+    border-bottom:none;
     padding:0 0;
     margin:0;
     background:#fff;
-    box-shadow:-20px 0 0 #fff, 20px 0 0 #fff;
+    box-shadow:-15px 0 0 #fff, 15px 0 0 #fff;
     filter:drop-shadow(0 -10px 0px #fff) drop-shadow(0 10px 0px #fff);
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
@@ -179,6 +197,7 @@ aside{
     margin:30px 10px;
     position:relative;
     filter:drop-shadow(0 1px 1px rgba(0,0,0,0.25));
+    cursor:default;
 }
 
 .jigsaw-path-piece:before{

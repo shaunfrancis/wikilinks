@@ -28,6 +28,39 @@ class Article{
         container.classList.add('game-article');
         while(child = html.body.firstChild) container.appendChild(child);
         this.html = container;
+
+        this.tableOfContents = this.parseTableOfContents(container);
+    }
+
+    parseTableOfContents(container){
+        const tableOfContents = [];
+        let currentTree = [], previousLevel = 2;
+        
+        container.querySelectorAll("h2, h3, h4, h5, h6").forEach( heading => {
+            const level = parseInt(heading.tagName[1]), headline = heading.querySelector(".mw-headline");
+            if(!headline) return;
+            
+            const entry = {
+                label: headline.innerHTML,
+                element: heading,
+                children: []
+            };
+
+            if(level <= previousLevel){
+                level == 2 ? tableOfContents.push(entry) : currentTree[level - 3].children.push(entry);
+                previousLevel = level;
+                currentTree.length = level - 1;
+                currentTree[currentTree.length - 1] = entry;
+            }
+            else{
+                currentTree[currentTree.length - 1].children.push(entry);
+                currentTree.push(entry);
+                previousLevel += 1;
+            }
+
+        });
+
+        return tableOfContents;
     }
 
     makeInteractive(callback){

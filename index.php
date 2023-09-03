@@ -141,6 +141,8 @@
                 <div id="current-seconds" class="current-stat-value">0</div>
                 <div class="current-stat-label">seconds</div>
             </div>
+
+            <div id="table-of-contents"></div>
         </aside>
         <section id="game-content" class="content">
             

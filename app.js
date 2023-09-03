@@ -22,21 +22,44 @@ class Article{
         text = text.replace(/<\/a>/g, '</span>');
 
         const parser = new DOMParser();
-        const html = parser.parseFromString(`<h1>${this.title}</h1>${text}`, 'text/html');
+        const html = parser.parseFromString(`<h1 id="article-title">${this.title}</h1>${text}`, 'text/html');
 
         let container = document.createElement('div'), child;
         container.classList.add('game-article');
         while(child = html.body.firstChild) container.appendChild(child);
         this.html = container;
 
-        this.tableOfContents = this.parseTableOfContents(container);
+        this.tableOfContents = new TableOfContents(container);
     }
 
-    parseTableOfContents(container){
-        const tableOfContents = [];
+    makeInteractive(callback){
+        [...this.html.querySelectorAll('[data-target]')].forEach( link => {
+            const target = decodeURI(link.dataset.target).replace(/_/g, ' ');
+            link.removeAttribute('data-target');
+            link.addEventListener('click', () => {
+                this.tableOfContents.listenForScroll = false;
+                this.html.classList.add('loading');
+                callback(new Article(target));
+            });
+        });
+
+        this.tableOfContents.listenForScroll = true;
+    }
+}
+
+class TableOfContents{
+
+    constructor(articleHtml){
+        this.articleHtml = articleHtml;
+        this.parse();
+        this.build();
+    }
+
+    parse(){
+        this.structure = [ {label: "(Top)", element: document.body, children: []} ];
         let currentTree = [], previousLevel = 2;
         
-        container.querySelectorAll("h2, h3, h4, h5, h6").forEach( heading => {
+        this.articleHtml.querySelectorAll("h2, h3, h4, h5, h6").forEach( heading => {
             const level = parseInt(heading.tagName[1]), headline = heading.querySelector(".mw-headline");
             if(!headline) return;
             
@@ -47,7 +70,7 @@ class Article{
             };
 
             if(level <= previousLevel){
-                level == 2 ? tableOfContents.push(entry) : currentTree[level - 3].children.push(entry);
+                level == 2 ? this.structure.push(entry) : currentTree[level - 3].children.push(entry);
                 previousLevel = level;
                 currentTree.length = level - 1;
                 currentTree[currentTree.length - 1] = entry;
@@ -59,20 +82,86 @@ class Article{
             }
 
         });
-
-        return tableOfContents;
     }
 
-    makeInteractive(callback){
-        [...this.html.querySelectorAll('[data-target]')].forEach( link => {
-            const target = decodeURI(link.dataset.target).replace(/_/g, ' ');
-            link.removeAttribute('data-target');
-            link.addEventListener('click', () => {
-                this.html.classList.add('loading');
-                callback(new Article(target));
-            });
+    build(){
+        this.html = document.createElement('ul');
+        this.structure.forEach( entry => {
+            this.buildBranch(entry, this.html, true);
         });
     }
+
+    buildBranch(entry, parentUl, topLevel){
+        const li = document.createElement('li');
+        entry.li = li;
+
+        if(topLevel && entry.children.length > 0){
+            li.classList.add('closed');
+            const expand = document.createElement('div');
+            expand.classList.add('contents-expand');
+            expand.addEventListener('click', () => {
+                li.classList.toggle('closed');
+            });
+            li.appendChild(expand);
+        }
+
+        const label = document.createElement('div');
+        label.classList.add('contents-label');
+        label.innerHTML = entry.label;
+        li.appendChild(label);
+        parentUl.appendChild(li);
+        
+        label.addEventListener('click', () => {
+            entry.element.scrollIntoView();
+        });
+
+        if(entry.children.length > 0){
+            const ul = document.createElement('ul');
+            entry.children.forEach( childEntry => {
+                this.buildBranch(childEntry, ul);
+            });
+            li.appendChild(ul);
+        }
+    }
+
+    set listenForScroll(bool){
+        if(bool) document.addEventListener('scroll', this._highlightCurrentEntry = this.highlightCurrentEntry.bind(this));
+        else document.removeEventListener('scroll', this._highlightCurrentEntry);
+    }
+
+    highlightCurrentEntry(){
+        let leastNegative = -Infinity, currentEntry, currentTopLevel;
+        
+        const checkPositionOf = (entries, topLevel) => {
+            for(let i = entries.length - 1; i >= 0; i--){
+                let entry = entries[i];
+
+                const position = entry.element.getBoundingClientRect();
+                if(position.y - 40 <= 0 && position.y - 40 > leastNegative){
+                    leastNegative = position.y;
+                    currentEntry = entry;
+                    if(topLevel) currentTopLevel = entry;
+                    checkPositionOf(entry.children);
+                }
+
+            };
+        }
+        checkPositionOf(this.structure, true);
+
+        const unselectEntries = (entries) => {
+            entries.forEach( entry => {
+                entry.li.classList.remove('current-entry', 'current-entry-toplevel');
+                unselectEntries(entry.children);
+            });
+        }
+        unselectEntries(this.structure);
+
+        if(currentEntry){
+            currentEntry.li.classList.add('current-entry');
+            if(currentEntry != currentTopLevel) currentTopLevel.li.classList.add('current-entry-toplevel');
+        }
+    }
+
 }
 
 class Game{
@@ -113,8 +202,12 @@ class Game{
         await article.download();
         article.parse();
         article.makeInteractive(this.next.bind(this));
+
         document.getElementById('game-content').innerHTML = "";
         document.getElementById('game-content').appendChild(article.html);
+        document.getElementById('table-of-contents').innerHTML = "";
+        document.getElementById('table-of-contents').appendChild(article.tableOfContents.html);
+
         this.resumeTimer();
 
         if(this.clicks > 0){

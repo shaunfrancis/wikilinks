@@ -129,17 +129,19 @@
             <div id="goal-jigsaw-path-piece" class="jigsaw-path-piece"></div>
         </section>
         <aside>
-            <div class="current-stat">
-                <div id="current-points" class="current-stat-value">0</div>
-                <div class="current-stat-label">points</div>
-            </div>
-            <div class="current-stat">
-                <div id="current-clicks" class="current-stat-value">0</div>
-                <div class="current-stat-label">clicks</div>
-            </div>
-            <div class="current-stat">
-                <div id="current-seconds" class="current-stat-value">0</div>
-                <div class="current-stat-label">seconds</div>
+            <div id="current-stats">
+                <div class="current-stat">
+                    <div id="current-points" class="current-stat-value">0</div>
+                    <div class="current-stat-label">points</div>
+                </div>
+                <div class="current-stat">
+                    <div id="current-clicks" class="current-stat-value">0</div>
+                    <div class="current-stat-label">clicks</div>
+                </div>
+                <div class="current-stat">
+                    <div id="current-seconds" class="current-stat-value">0</div>
+                    <div class="current-stat-label">seconds</div>
+                </div>
             </div>
 
             <div id="table-of-contents"></div>

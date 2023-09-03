@@ -48,7 +48,7 @@ body.main-visible main, body.game-visible #game{
 
 aside{
     grid-area:sidebar;
-    max-height:100vh;
+    max-height:calc(100vh - 40px);
     position:-webkit-sticky;
     position:sticky;
     top:0;
@@ -191,14 +191,21 @@ aside{
 #jigsaw-path-container{
     display:flex;
     flex:1;
+    padding-right:30px;
+}
+#jigsaw-path-container.pieces-hidden:before{
+    content: "\2022 \2022 \2022";
+    margin: 30px 30px 30px 20px;
+    padding: 20px 0;
 }
 
 .jigsaw-path-piece{
     background:#fff;
     margin:30px 10px;
     position:relative;
-    filter:drop-shadow(0 1px 1px rgba(0,0,0,0.25));
+    filter:drop-shadow(0 0 1px rgb(150,150,150));
     cursor:default;
+    white-space:nowrap;
 }
 
 .jigsaw-path-piece:before{
@@ -241,8 +248,14 @@ aside{
     background-size:80px, 80px, 20px calc(100% - 40px), 20px calc(100% - 40px);
 }
 
+#current-stats{
+    display:flex;
+    width:100%;
+}
+
 .current-stat{
     text-align:center;
+    flex:1;
 }
 
 .current-stat-value{

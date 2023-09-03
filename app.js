@@ -170,6 +170,8 @@ class Game{
         this.goal = new Article(goal);
         this.clicks = -1;
 
+        this.path = [];
+
         document.getElementById('initial-jigsaw-path-piece').innerHTML = initial;
         document.getElementById('goal-jigsaw-path-piece').innerHTML = goal;
     }
@@ -203,6 +205,12 @@ class Game{
         article.parse();
         article.makeInteractive(this.next.bind(this));
 
+        const pathStep = {
+            article: article,
+            time: this.elapsed
+        };
+        this.path.push(pathStep);
+
         document.getElementById('game-content').innerHTML = "";
         document.getElementById('game-content').appendChild(article.html);
         document.getElementById('table-of-contents').innerHTML = "";
@@ -211,11 +219,13 @@ class Game{
         this.resumeTimer();
 
         if(this.clicks > 0){
-            const pathPiece = document.createElement('div');
-            pathPiece.classList.add('jigsaw-path-piece');
-            pathPiece.innerHTML = article.title;
-            document.getElementById('jigsaw-path-container').appendChild(pathPiece);
+            const pathPiece = this.updateJigsawPath(article.title);
+            pathStep.pathPiece = {
+                element: pathPiece,
+                visible: true
+            }
         }
+
     }
 
     pauseTimer(){ this.paused = true; this.pausedAt = Date.now() }
@@ -225,7 +235,29 @@ class Game{
         document.getElementById('current-seconds').innerHTML = this.elapsed;
         document.getElementById('current-clicks').innerHTML = this.clicks;
         document.getElementById('current-points').innerHTML = 10*this.clicks + Math.floor(this.elapsed/10);
+    }
 
+    updateJigsawPath(title){
+        const pathPiece = document.createElement('div');
+        pathPiece.classList.add('jigsaw-path-piece');
+        pathPiece.innerHTML = title;
+        document.getElementById('jigsaw-path-container').appendChild(pathPiece);
+
+        while(document.getElementById('game-banner').getBoundingClientRect().width > window.innerWidth){
+            const step = this.path.find( step => "pathPiece" in step && step.pathPiece.visible);
+
+            if(step){
+                if(step.pathPiece.element.parentElement) step.pathPiece.element.parentElement.removeChild(step.pathPiece.element);
+                step.pathPiece.visible = false;
+                document.getElementById('jigsaw-path-container').classList.add('pieces-hidden');
+            }
+            else{ //if all other pieces are hidden, truncate the most recent piece
+                if(pathPiece.innerHTML.length < 8) break;
+                pathPiece.innerHTML = pathPiece.innerHTML.substring(0, pathPiece.innerHTML.length - 8) + "&hellip;";
+            }
+        }
+
+        return pathPiece;
     }
 }
 

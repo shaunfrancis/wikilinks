@@ -6,6 +6,7 @@ class Article{
     async download(){
         let response = await fetch(`scripts/get_article.php?title=${encodeURI(this.title)}`);
         response = await response.json();
+        this.downloaded = true;
         if(response.status == 200){
             this.title = response.title;
             this.content = response.content;
@@ -39,6 +40,7 @@ class Article{
             link.addEventListener('click', () => {
                 this.tableOfContents.listenForScroll = false;
                 this.html.classList.add('loading');
+                this.tableOfContents.html.classList.add('loading');
                 callback(new Article(target));
             });
         });
@@ -171,15 +173,21 @@ class Game{
         this.clicks = -1;
 
         this.path = [];
-
-        document.getElementById('initial-jigsaw-path-piece').innerHTML = initial;
-        document.getElementById('goal-jigsaw-path-piece').innerHTML = goal;
     }
 
     async start(){
+        document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('initial-jigsaw-path-piece').innerHTML = this.initial.title;
+        document.getElementById('goal-jigsaw-path-piece').innerHTML = this.goal.title;
+
         this.startTime = Date.now();
         this.elapsed = 0;
         this.pausedTime = 0;
+
+        await Promise.all([this.initial.download(), this.goal.download()]);
+        //update titles in case of redirect
+        document.getElementById('initial-jigsaw-path-piece').innerHTML = this.initial.title;
+        document.getElementById('goal-jigsaw-path-piece').innerHTML = this.goal.title;
 
         setInterval(this.controller.bind(this), 500);
 
@@ -201,7 +209,10 @@ class Game{
         this.updateStats();
 
         this.pauseTimer();
-        await article.download();
+        if(!article.downloaded) await article.download();
+
+        if(article.title == this.goal.title) return this.win();
+
         article.parse();
         article.makeInteractive(this.next.bind(this));
 
@@ -259,6 +270,10 @@ class Game{
 
         return pathPiece;
     }
+
+    win(){
+        alert("WOOHOO YOU DID IT");
+    }
 }
 
 async function temp_game(){
@@ -266,7 +281,7 @@ async function temp_game(){
     document.body.classList.remove('main-visible');
     document.body.classList.add('game-visible');
     
-    const game = new Game("United Kingdom", "Tony Blair");
+    const game = new Game(document.getElementById('temp_start').value, document.getElementById('temp_end').value);
     game.start();
 
 }

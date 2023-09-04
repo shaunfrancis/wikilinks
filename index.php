@@ -48,7 +48,6 @@
                             <p>Candaules, King of Lydia, Shews his Wife by Stealth to Gyges, One of his Ministers, as She Goes to Bed, occasionally formerly known as The Imprudence of Candaules, is a 45.1 by 55.9 cm (17.8 by 22.0 in) oil painting on canvas by English artist William Etty, first exhibited at the Royal Academy in 1830.</p>
                         </div>
                     </div>
-                    
                 </div>
 
                 <h1>This Week's Games</h1>
@@ -116,6 +115,9 @@
                     </div>
                 </div>
 
+
+                <input id="temp_start" value="United Kingdom" />
+                <input id="temp_end" value="Island country" />
                 <button onclick="temp_game()">temp_game</button>
 
             </section>
@@ -131,20 +133,23 @@
         <aside>
             <div id="current-stats">
                 <div class="current-stat">
-                    <div id="current-points" class="current-stat-value">0</div>
-                    <div class="current-stat-label">points</div>
+                    <div id="current-seconds" class="current-stat-value">0</div>
+                    <div class="current-stat-label">seconds</div>
                 </div>
                 <div class="current-stat">
                     <div id="current-clicks" class="current-stat-value">0</div>
                     <div class="current-stat-label">clicks</div>
                 </div>
                 <div class="current-stat">
-                    <div id="current-seconds" class="current-stat-value">0</div>
-                    <div class="current-stat-label">seconds</div>
+                    <div id="current-points" class="current-stat-value">0</div>
+                    <div class="current-stat-label">points</div>
                 </div>
             </div>
 
-            <div id="table-of-contents"></div>
+            <div id="table-of-contents-container">
+                <h3>Contents</h3>
+                <div id="table-of-contents"></div>
+            </div>
         </aside>
         <section id="game-content" class="content">
             

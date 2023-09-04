@@ -28,6 +28,12 @@ section > h1, section > h2, .game-article h1, .game-article h2{
 
 .reference, .mw-editsection, .mw-cite-backlink, .ambox{ display:none }
 
+.mw-halign-right{
+    margin: 0.5em 0 1.3em 1.4em;
+    clear: right;
+    float: right;
+}
+
 .hatnote{ font-size: 0.875em; line-height: 1.6 }
 
 #game-content .link{

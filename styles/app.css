@@ -53,6 +53,7 @@ aside{
     position:sticky;
     top:0;
     padding:20px;
+    overflow-y:auto;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -82,9 +83,7 @@ aside{
 .content{
     margin-block:30px 50px;
     grid-area:main-content;
-    padding:20px;
-    background:white;
-    box-shadow:-2px 0 2px rgba(0,0,0,0.15), 0 0 10px rgba(0,0,0,0.08);
+    padding:0 20px;
 }
 
 .featured-games-container{
@@ -98,12 +97,7 @@ aside{
     margin:10px 0;
     padding:20px;
     flex:0 0 60%;
-    cursor:pointer;
     transition:background-color 100ms;
-}
-
-.featured-game-container:hover{
-    background-color:rgb(214, 223, 255);
 }
 
 .featured-arrow{
@@ -175,9 +169,10 @@ aside{
 
 #game-content{
     border-radius:2px;
+    margin-block-start:0;
 }
 
-.game-article.loading{
+.game-article.loading, #table-of-contents ul.loading{
     pointer-events:none;
     opacity:0.5;
 }
@@ -262,10 +257,11 @@ aside{
     font-size:1.5em;
 }
 
-#table-of-contents{ 
+#table-of-contents-container{ 
     font-size:0.875em;
     width:100%;
     max-width:240px;
+    margin-top:50px;
     -webkit-user-select:none;
     user-select:none;
 }

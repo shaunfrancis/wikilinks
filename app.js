@@ -272,7 +272,8 @@ class Game{
     }
 
     win(){
-        alert("WOOHOO YOU DID IT");
+        document.body.classList.remove('game-visible');
+        document.body.classList.add('win-visible');
     }
 }
 

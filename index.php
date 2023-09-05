@@ -14,7 +14,7 @@
         <aside>
             <img id="logo" alt="Wikilinks" src="images/logo.svg" />
             <p id="explainer">Race between two Wikipedia articles using only the links in each article, as quickly and in as few clicks as possible!</p>
-            <div id="mode-container">
+            <div id="mode-container" style="display:none">
                 <div class="card">
                     <h2>Single Player</h2>
                 </div>
@@ -29,23 +29,22 @@
         <div class="content">
             <section>
                 <h1>Today's Game</h1>
+                <?php include 'scripts/todays_game.php'; ?>
                 <div class="featured-game-container">
                     
                     <div class="featured-article">
-                        <div class="jigsaw-pattern" style="background-image:url(https://upload.wikimedia.org/wikipedia/en/a/a5/Super_Mario_Bros._3_coverart.png)"></div>
+                        <div class="jigsaw-pattern" style="background-image:url(<?php echo $todays_game["initial_image"]; ?>)"></div>
                         <div class="featured-article-content">
-                            <h2>Super Mario Bros. 3</h2>
-                            <p>Super Mario Bros. 3 is a platform game developed and published by Nintendo for the Nintendo Entertainment System (NES). It was released for home consoles in Japan on October 23, 1988, in North America on February 12, 1990 and in Europe on August 29, 1991. It was developed by Nintendo Entertainment Analysis and Development, led by Shigeru Miyamoto and Takashi Tezuka.</p>
+                            <h2><?php echo $todays_game["initial"]; ?></h2>
                         </div>
                     </div>
 
                     <img src="images/arrow.svg" alt="to" class="featured-arrow" />
 
                     <div class="featured-article">
-                        <div class="jigsaw-pattern" style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/b/b7/William_Etty_%281787–1849%29_–_Candaules%2C_King_of_Lydia%2C_Shews_his_Wife_by_Stealth_to_Gyges%2C_One_of_his_Ministers%2C_as_She_Goes_to_Bed_–_N00358_–_Tate.jpg)"></div>
+                        <div class="jigsaw-pattern" style="background-image:url(<?php echo $todays_game["target_image"]; ?>)"></div>
                         <div class="featured-article-content">
-                            <h2>Candaules, King of Lydia, Shews his Wife by Stealth to Gyges, One of his Ministers, as She Goes to Bed</h2>
-                            <p>Candaules, King of Lydia, Shews his Wife by Stealth to Gyges, One of his Ministers, as She Goes to Bed, occasionally formerly known as The Imprudence of Candaules, is a 45.1 by 55.9 cm (17.8 by 22.0 in) oil painting on canvas by English artist William Etty, first exhibited at the Royal Academy in 1830.</p>
+                            <h2><?php echo $todays_game["goal"]; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -115,7 +114,6 @@
                     </div>
                 </div>
 
-
                 <input id="temp_start" value="United Kingdom" />
                 <input id="temp_end" value="Island country" />
                 <button onclick="temp_game()">temp_game</button>
@@ -151,8 +149,13 @@
                 <div id="table-of-contents"></div>
             </div>
         </aside>
-        <section id="game-content" class="content">
-            
+        <section id="game-content" class="content"> </section>
+    </section>
+
+    <section id="win" class="page">
+        <aside></aside>
+        <section class="content">
+            <h1>Congratulations!</h1>
         </section>
     </section>
 

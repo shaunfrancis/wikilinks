@@ -1,2 +1,3 @@
 .DS_Store
 dev-images
+scripts/db.php

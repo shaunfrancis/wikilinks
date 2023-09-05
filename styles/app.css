@@ -40,7 +40,7 @@ p{ font-size: 0.875em; line-height:1.6 }
     transition:opacity 200ms;
 }
 
-body.main-visible main, body.game-visible #game{
+body.main-visible main, body.game-visible #game, body.win-visible #win{
     z-index:1;
     opacity:1;
     pointer-events:auto;
